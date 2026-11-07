@@ -82,6 +82,12 @@ void registrarMovimento(void) {
     gotoxy(12, 15);
     printf("2 - Saque");
 
+    gotoxy(12, 16);
+printf("3 - Transferencia bancaria");
+
+gotoxy(12, 17);
+printf("0 - Voltar");
+
     gotoxy(12, 17);
     printf("Escolha: ");
     scanf("%d", &opcao);
@@ -284,9 +290,12 @@ void menuMovimentacao(void) {
         printf("2 - Consultar movimentacoes");
 
         gotoxy(15, 11);
-        printf("0 - Voltar");
+        printf("3 - Transferencia bancaria");
 
         gotoxy(15, 13);
+        printf("0 - Voltar");
+
+        gotoxy(15, 15);
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
@@ -298,6 +307,10 @@ void menuMovimentacao(void) {
             case 2:
                 consultarMovimento();
                 break;
+            
+            case 3:
+             transferencia();
+             break;
 
             case 0:
                 break;

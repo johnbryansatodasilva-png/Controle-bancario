@@ -53,5 +53,5 @@ void consultarMovimento(void);
 void alterarConta(void);
 void gotoxy(int x, int y);
 void excluirConta(void);
-
+void transferencia(void);
 #endif

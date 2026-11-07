@@ -1,5 +1,5 @@
-/*  AUTOR.....: Matheus Henrique Lopes da Silva
-    DATA......: 05/11/2026
+/*  AUTOR.....: John Bryan Sato da Silva
+    DATA......: 06/11/2026
 
     GRUPO.....: Matheus Henrique RA: 439746-2026
                 John Bryan RA: 437929-2026

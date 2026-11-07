@@ -4,7 +4,7 @@
     GRUPO.....: Matheus Henrique RA: 439746-2026
                 John Bryan RA: 437929-2026
 
-    OBJETIVO..: 
+    OBJETIVO..: Declarar as estruturas, variaveis globais e prototipos das funcoes utilizadas no Sistema de Controle Bancario
 */
 
 
@@ -54,4 +54,10 @@ void alterarConta(void);
 void gotoxy(int x, int y);
 void excluirConta(void);
 void transferencia(void);
+void relatorios(void);
+void inserirPosicao(CONTA *nova, int posicao);
+void salvarArquivos(void);
+void carregarArquivos(void);
+void listarContas(void);
+
 #endif

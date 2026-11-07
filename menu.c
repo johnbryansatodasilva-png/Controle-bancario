@@ -59,10 +59,11 @@ void menuPrincipal(void) {
                 break;
 
             case 6:
-                printf("\n  Relatorios selecionados.");
+                relatorios();
                 break;
 
             case 0:
+                salvarArquivos();
                 printf("\n  Encerrando o sistema...");
                 break;
 

@@ -8,6 +8,7 @@
 */
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -18,6 +19,8 @@ MOVIMENTACAO *inicioMov = NULL;
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
+
+    carregarArquivos();
 
     menuPrincipal();
 

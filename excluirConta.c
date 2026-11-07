@@ -4,8 +4,9 @@
     GRUPO.....: Matheus Henrique RA: 439746-2026
                 John Bryan RA: 437929-2026
 
-    OBJETIVO..: Excluir uma conta bancaria cadastrada, removendo seus dados da lista apos a confirmacao do usuario
+    OBJETIVO..: Realizar a exclusao de contas, verificando se existem movimentacoes vinculadas antes de permitir a operacao
 */
+
 
 
 #include <stdio.h>
@@ -14,7 +15,9 @@
 
 void excluirConta(void) {
     CONTA *aux;
+    MOVIMENTACAO *mov;
     int codigo;
+    int opcao;
 
     system("cls");
 
@@ -57,6 +60,22 @@ void excluirConta(void) {
         goto finalizar;
     }
 
+    mov = inicioMov;
+
+    while (mov != NULL) {
+        if (mov->codigoConta == codigo) {
+            gotoxy(12, 14);
+            printf("Esta conta possui movimentacoes!");
+
+            gotoxy(12, 16);
+            printf("A exclusao nao pode ser realizada.");
+
+            goto finalizar;
+        }
+
+        mov = mov->prox;
+    }
+
     gotoxy(12, 12);
     printf("Conta encontrada!");
 
@@ -72,7 +91,6 @@ void excluirConta(void) {
     gotoxy(12, 19);
     printf("Confirmar exclusao? (1 - Sim / 0 - Nao): ");
 
-    int opcao;
     scanf("%d", &opcao);
 
     if (opcao == 1) {

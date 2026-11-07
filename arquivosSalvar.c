@@ -8,6 +8,7 @@
 */
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcoes.h"
@@ -23,7 +24,7 @@ void salvarArquivos(void) {
     arquivo = fopen("contas.dat", "wb");
 
     if (arquivo == NULL) {
-        printf("\nErro ao salvar as contas!");
+        printf("\nErro ao abrir o arquivo de contas!");
         return;
     }
 
@@ -31,20 +32,28 @@ void salvarArquivos(void) {
 
     while (conta != NULL) {
         dadosConta = *conta;
+
         dadosConta.ant = NULL;
         dadosConta.prox = NULL;
 
-        fwrite(&dadosConta, sizeof(CONTA), 1, arquivo);
+        if (fwrite(&dadosConta, sizeof(CONTA), 1, arquivo) != 1) {
+            printf("\nErro ao gravar uma conta!");
+            fclose(arquivo);
+            return;
+        }
 
         conta = conta->prox;
     }
 
-    fclose(arquivo);
+    if (fclose(arquivo) != 0) {
+        printf("\nErro ao fechar o arquivo de contas!");
+        return;
+    }
 
     arquivo = fopen("movimentacoes.dat", "wb");
 
     if (arquivo == NULL) {
-        printf("\nErro ao salvar as movimentacoes!");
+        printf("\nErro ao abrir o arquivo de movimentacoes!");
         return;
     }
 
@@ -54,12 +63,21 @@ void salvarArquivos(void) {
         dadosMov = *mov;
         dadosMov.prox = NULL;
 
-        fwrite(&dadosMov, sizeof(MOVIMENTACAO), 1, arquivo);
+        if (fwrite(&dadosMov, sizeof(MOVIMENTACAO), 1, arquivo) != 1) {
+            printf("\nErro ao gravar uma movimentacao!");
+            fclose(arquivo);
+            return;
+        }
 
         mov = mov->prox;
     }
 
-    fclose(arquivo);
+    if (fclose(arquivo) != 0) {
+        printf("\nErro ao fechar o arquivo de movimentacoes!");
+        return;
+    }
+
+    printf("\nDados salvos com sucesso!");
 }
 
 
@@ -79,13 +97,15 @@ void carregarArquivos(void) {
     if (arquivo != NULL) {
         while (fread(&dadosConta, sizeof(CONTA), 1, arquivo) == 1) {
 
-            novaConta = malloc(sizeof(CONTA));
+            novaConta = (CONTA *) malloc(sizeof(CONTA));
 
             if (novaConta == NULL) {
+                printf("\nErro ao alocar memoria para uma conta!");
                 break;
             }
 
             *novaConta = dadosConta;
+
             novaConta->ant = ultimaConta;
             novaConta->prox = NULL;
 
@@ -98,6 +118,10 @@ void carregarArquivos(void) {
             ultimaConta = novaConta;
         }
 
+        if (ferror(arquivo)) {
+            printf("\nErro ao ler o arquivo de contas!");
+        }
+
         fclose(arquivo);
     }
 
@@ -106,9 +130,10 @@ void carregarArquivos(void) {
     if (arquivo != NULL) {
         while (fread(&dadosMov, sizeof(MOVIMENTACAO), 1, arquivo) == 1) {
 
-            novaMov = malloc(sizeof(MOVIMENTACAO));
+            novaMov = (MOVIMENTACAO *) malloc(sizeof(MOVIMENTACAO));
 
             if (novaMov == NULL) {
+                printf("\nErro ao alocar memoria para uma movimentacao!");
                 break;
             }
 
@@ -122,6 +147,10 @@ void carregarArquivos(void) {
             }
 
             ultimaMov = novaMov;
+        }
+
+        if (ferror(arquivo)) {
+            printf("\nErro ao ler o arquivo de movimentacoes!");
         }
 
         fclose(arquivo);

@@ -1,0 +1,9 @@
+# Executáveis e arquivos temporários
+*.exe
+*.o
+
+# Cópias de segurança locais
+.vscode_backup/
+
+# Mantém a pasta output no repositório, mas ignora os executáveis nela
+output/*.exe

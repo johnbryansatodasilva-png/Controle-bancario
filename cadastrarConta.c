@@ -10,21 +10,17 @@
 
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcoes.h"
 
 void cadastrarConta(void) {
     CONTA *nova;
+    CONTA *aux;
+    int novaCodigo;
 
     system("cls");
-
-    nova = (CONTA *) malloc(sizeof(CONTA));
-
-    if (nova == NULL) {
-        printf("Erro ao alocar memoria!");
-        return;
-    }
 
     for (int x = 10; x <= 70; x++) {
         gotoxy(x, 3);
@@ -45,7 +41,36 @@ void cadastrarConta(void) {
 
     gotoxy(12, 7);
     printf("Codigo da conta: ");
-    scanf("%d", &nova->codigo);
+    scanf("%d", &novaCodigo);
+
+    aux = inicio;
+
+    while (aux != NULL) {
+        if (aux->codigo == novaCodigo) {
+            gotoxy(12, 24);
+            printf("Codigo ja cadastrado!");
+
+            gotoxy(12, 26);
+            printf("Pressione ENTER para continuar...");
+            getchar();
+            getchar();
+            return;
+        }
+
+        aux = aux->prox;
+    }
+
+    nova = (CONTA *) malloc(sizeof(CONTA));
+
+    if (nova == NULL) {
+        gotoxy(12, 24);
+        printf("Erro ao alocar memoria!");
+        getchar();
+        getchar();
+        return;
+    }
+
+    nova->codigo = novaCodigo;
 
     gotoxy(12, 9);
     printf("Banco: ");

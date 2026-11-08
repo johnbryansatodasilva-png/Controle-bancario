@@ -15,85 +15,63 @@
 
 void consultarConta(void) {
     CONTA *aux = inicio;
-    int linha = 6;
+    int linha = 8;
 
     system("cls");
 
-    for (int x = 10; x <= 75; x++) {
+    // Borda superior e inferior
+    for (int x = 5; x <= 80; x++) {
         gotoxy(x, 3);
         printf("-");
         gotoxy(x, 25);
         printf("-");
     }
 
+    // Bordas laterais
     for (int y = 3; y <= 25; y++) {
-        gotoxy(10, y);
+        gotoxy(5, y);
         printf("|");
-        gotoxy(75, y);
+        gotoxy(80, y);
         printf("|");
     }
 
-    gotoxy(29, 5);
+    // Titulo
+    gotoxy(32, 5);
     printf("CONSULTA DE CONTAS");
 
     if (inicio == NULL) {
-        gotoxy(22, 14);
+        gotoxy(27, 14);
         printf("Nenhuma conta cadastrada!");
-
-        gotoxy(22, 27);
-        printf("Pressione ENTER para continuar...");
-        getchar();
-        getchar();
-        return;
     }
+    else {
+        // Cabecalho
+        gotoxy(7, 7);
+        printf("CODIGO  BANCO          AGENCIA  CONTA    TIPO       SALDO");
 
-    while (aux != NULL) {
-        if (linha > 21) {
-            gotoxy(12, 23);
-            printf("Existem mais contas cadastradas...");
-            break;
+        gotoxy(7, 8);
+        printf("---------------------------------------------------------------------");
+
+        while (aux != NULL && linha <= 23) {
+
+            gotoxy(7, linha++);
+            printf("%-7d %-14.14s %-8d %-8d %-10.10s R$ %.2f",
+                   aux->codigo,
+                   aux->banco,
+                   aux->agencia,
+                   aux->numeroConta,
+                   aux->tipo,
+                   aux->saldo);
+
+            aux = aux->prox;
         }
-
-        gotoxy(12, linha++);
-        printf("Codigo: %d", aux->codigo);
-
-        gotoxy(12, linha++);
-        printf("Banco: %s", aux->banco);
-
-        gotoxy(12, linha++);
-        printf("Agencia: %d", aux->agencia);
-
-        gotoxy(12, linha++);
-        printf("Numero da conta: %d", aux->numeroConta);
-
-        gotoxy(12, linha++);
-        printf("Tipo: %s", aux->tipo);
-
-        gotoxy(12, linha++);
-        printf("Saldo: R$ %.2f", aux->saldo);
-
-        gotoxy(12, linha++);
-        printf("Limite: R$ %.2f", aux->limite);
-
-        gotoxy(12, linha++);
-        if (aux->status == 1) {
-            printf("Status: Ativa");
-        } else {
-            printf("Status: Inativa");
-        }
-
-        aux = aux->prox;
-
-        linha++;
 
         if (aux != NULL) {
-            gotoxy(12, linha++);
-            printf("-----------------------------------------------");
-            linha++;
+            gotoxy(20, 24);
+            printf("Existem mais contas cadastradas...");
         }
     }
 
-    gotoxy(20, 27);
+    gotoxy(25, 27);
     printf("Pressione ENTER para continuar...");
     getchar();
     getchar();

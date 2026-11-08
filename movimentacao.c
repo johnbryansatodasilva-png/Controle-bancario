@@ -9,6 +9,7 @@
 
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcoes.h"
@@ -31,7 +32,8 @@ static int converterData(const char data[]) {
         31, 31, 30, 31, 30, 31
     };
 
-    if ((ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0)) {
+    if ((ano % 400 == 0) ||
+        (ano % 4 == 0 && ano % 100 != 0)) {
         diasMes[1] = 29;
     }
 
@@ -42,11 +44,50 @@ static int converterData(const char data[]) {
     return ano * 10000 + mes * 100 + dia;
 }
 
+int validarData(const char data[], int codigoConta) {
+    int dataInformada = converterData(data);
+    int ultimaData = 0;
+
+    MOVIMENTACAO *aux = inicioMov;
+
+    if (dataInformada == 0) {
+        return 0;
+    }
+
+    while (aux != NULL) {
+        if (aux->codigoConta == codigoConta) {
+            int dataAnterior = converterData(aux->data);
+
+            if (dataAnterior > ultimaData) {
+                ultimaData = dataAnterior;
+            }
+        }
+
+        aux = aux->prox;
+    }
+
+    if (dataInformada < ultimaData) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int validarSaldo(float valor, float saldo, float limite) {
+    if (valor <= 0) {
+        return 0;
+    }
+
+    if (valor > saldo + limite) {
+        return 0;
+    }
+
+    return 1;
+}
+
 static void registrarMovimentoTipo(int opcao) {
     int codigo;
     int maiorNumero = 0;
-    int dataInformada;
-    int ultimaData = 0;
     float valor;
 
     CONTA *conta = inicio;
@@ -72,7 +113,8 @@ static void registrarMovimentoTipo(int opcao) {
     }
 
     gotoxy(25, 5);
-    printf("%s", opcao == 1 ? "REGISTRAR ENTRADA" : "REGISTRAR SAIDA");
+    printf("%s", opcao == 1 ?
+           "REGISTRAR ENTRADA" : "REGISTRAR SAIDA");
 
     if (inicio == NULL) {
         gotoxy(20, 14);
@@ -113,15 +155,16 @@ static void registrarMovimentoTipo(int opcao) {
     printf("Valor da movimentacao: R$ ");
     scanf("%f", &valor);
 
-    if (valor <= 0) {
+    if (!validarSaldo(valor, conta->saldo,
+                     opcao == 2 ? conta->limite : 0)) {
         gotoxy(12, 21);
-        printf("Valor invalido!");
-        goto finalizar;
-    }
 
-    if (opcao == 2 && valor > conta->saldo + conta->limite) {
-        gotoxy(12, 21);
-        printf("Saldo e limite insuficientes!");
+        if (valor <= 0) {
+            printf("Valor invalido!");
+        } else {
+            printf("Saldo e limite insuficientes!");
+        }
+
         goto finalizar;
     }
 
@@ -129,11 +172,9 @@ static void registrarMovimentoTipo(int opcao) {
     printf("Data (DD/MM/AAAA): ");
     scanf("%10s", data);
 
-    dataInformada = converterData(data);
-
-    if (dataInformada == 0) {
+    if (!validarData(data, codigo)) {
         gotoxy(12, 21);
-        printf("Data invalida!");
+        printf("Data invalida ou anterior a ultima movimentacao!");
         goto finalizar;
     }
 
@@ -144,21 +185,7 @@ static void registrarMovimentoTipo(int opcao) {
             maiorNumero = aux->numero;
         }
 
-        if (aux->codigoConta == codigo) {
-            int dataAnterior = converterData(aux->data);
-
-            if (dataAnterior > ultimaData) {
-                ultimaData = dataAnterior;
-            }
-        }
-
         aux = aux->prox;
-    }
-
-    if (dataInformada < ultimaData) {
-        gotoxy(12, 21);
-        printf("Data anterior a ultima movimentacao!");
-        goto finalizar;
     }
 
     nova = (MOVIMENTACAO *) malloc(sizeof(MOVIMENTACAO));

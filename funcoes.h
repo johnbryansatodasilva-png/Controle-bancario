@@ -8,6 +8,7 @@
 */
 
 
+
 #ifndef FUNCOES_H
 #define FUNCOES_H
 
@@ -44,20 +45,27 @@ extern CONTA *inicio;
 extern MOVIMENTACAO *inicioMov;
 
 void menuPrincipal(void);
+void menuMovimentacao(void);
+
 void cadastrarConta(void);
 void inserirFinal(CONTA *nova);
+void inserirPosicao(CONTA *nova, int posicao);
 void consultarConta(void);
-void menuMovimentacao(void);
+void alterarConta(void);
+void excluirConta(void);
+void listarContas(void);
+
 void registrarMovimento(void);
 void consultarMovimento(void);
-void alterarConta(void);
-void gotoxy(int x, int y);
-void excluirConta(void);
+int validarData(const char data[], int codigoConta);
+int validarSaldo(float valor, float saldo, float limite);
 void transferencia(void);
+
 void relatorios(void);
-void inserirPosicao(CONTA *nova, int posicao);
+
 void salvarArquivos(void);
 void carregarArquivos(void);
-void listarContas(void);
+
+void gotoxy(int x, int y);
 
 #endif

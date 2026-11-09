@@ -2,14 +2,34 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Sistema de Controle Bancario",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/output/Banco.exe",
+      "preLaunchTask": "Compilar Sistema Bancario",
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Pichau/Desktop/Controle_Bancario",
-      "program": "c:/Users/Pichau/Desktop/Controle_Bancario/build/Debug/outDebug",
+      "cwd": "c:/Users/Administrator/Documents/n/Controle_Bancario",
+      "program": "c:/Users/Administrator/Documents/n/Controle_Bancario/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

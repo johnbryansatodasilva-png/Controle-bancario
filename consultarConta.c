@@ -19,7 +19,6 @@ void consultarConta(void) {
 
     system("cls");
 
-    // Borda superior e inferior
     for (int x = 5; x <= 80; x++) {
         gotoxy(x, 3);
         printf("-");
@@ -27,7 +26,6 @@ void consultarConta(void) {
         printf("-");
     }
 
-    // Bordas laterais
     for (int y = 3; y <= 25; y++) {
         gotoxy(5, y);
         printf("|");
@@ -35,7 +33,6 @@ void consultarConta(void) {
         printf("|");
     }
 
-    // Titulo
     gotoxy(32, 5);
     printf("CONSULTA DE CONTAS");
 
@@ -44,7 +41,6 @@ void consultarConta(void) {
         printf("Nenhuma conta cadastrada!");
     }
     else {
-        // Cabecalho
         gotoxy(7, 7);
         printf("CODIGO  BANCO          AGENCIA  CONTA    TIPO       SALDO");
 
